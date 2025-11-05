@@ -1,0 +1,7 @@
+# npmignore
+Cookie consent banner.md
+.opencode/
+AGENTS.md
+node_modules/
+demo/
+tests/
