@@ -1,0 +1,65 @@
+{
+  "name": "cookie-consent-banner",
+  "version": "1.0.0",
+  "description": "A comprehensive GDPR-compliant cookie consent banner ES6 module with localization support and third-party integrations",
+  "main": "src/cookieConsentBanner.js",
+  "module": "src/cookieConsentBanner.js",
+  "types": "src/cookieConsentBanner.d.ts",
+  "files": [
+    "src/",
+    "css/",
+    "locales/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "terser src/cookieConsentBanner.js -o src/cookieConsentBanner.min.js --compress --mangle",
+    "build:css": "cleancss -o css/cookie-consent.min.css css/cookie-consent.css",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:single": "jest --testPathPattern=",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "typecheck": "tsc --noEmit",
+    "dev": "live-server demo/",
+    "demo": "npm run build && live-server demo/"
+  },
+  "keywords": [
+    "cookie",
+    "consent",
+    "gdpr",
+    "privacy",
+    "banner",
+    "es6",
+    "module",
+    "localization",
+    "third-party"
+  ],
+  "author": "Senior Frontend Engineer",
+  "license": "MIT",
+  "peerDependencies": {
+    "markdown-it": "^13.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@types/markdown-it": "^12.2.3",
+    "babel-jest": "^30.2.0",
+    "clean-css-cli": "^5.6.2",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "live-server": "^1.2.2",
+    "markdown-it": "^13.0.1",
+    "terser": "^5.0.0",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BOSSoNe0013/CookieConsentBanner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BOSSoNe0013/CookieConsentBanner/issues"
+  },
+  "homepage": "https://github.com/BOSSoNe0013/CookieConsentBanner#readme"
+}

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Consent Banner - Demo</title>
+    <link rel="stylesheet" href="../css/cookie-consent.css" /> <!-- CODE COMMENT : This is the link to our CSS file -->
+    <style>
+        /* Demo page styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #f9fafb;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .demo-section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .demo-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .demo-btn:hover {
+            background: #1d4ed8;
+        }
+        
+        .demo-btn--secondary {
+            background: #6b7280;
+        }
+        
+        .demo-btn--secondary:hover {
+            background: #4b5563;
+        }
+        
+        .demo-code {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .demo-status {
+            padding: 1rem;
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        .demo-status--blocked {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+        
+        /* Simulate third-party services */
+        .google-analytics {
+            padding: 1rem;
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        .google-ads {
+            padding: 1rem;
+            background: #e0f2fe;
+            border: 1px solid #0ea5e9;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        .facebook-sdk {
+            padding: 1rem;
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🍪 Cookie Consent Banner Demo</h1>
+            <p>Comprehensive GDPR-compliant cookie consent management system</p>
+            <p><strong>Current Consent Status:</strong> <span id="consent-status">Not set</span></p>
+        </div>
+
+        <div class="demo-section">
+            <h2>Quick Actions</h2>
+            <p>Test different modal types and functionality:</p>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3>Modal Types</h3>
+                    <button class="demo-btn" onclick="cookieConsentBanner.showModal('banner')">
+                        Show Banner Modal
+                    </button>
+                    <button class="demo-btn" onclick="cookieConsentBanner.showModal('fullscreen')">
+                        Show Fullscreen Modal
+                    </button>
+                    <button class="demo-btn" onclick="cookieConsentBanner.showModal('management')">
+                        Show Management Modal
+                    </button>
+                </div>
+                
+                <div class="demo-card">
+                    <h3>Consent Status</h3>
+                    <button class="demo-btn" onclick="showConsentState()">
+                        Check Current State
+                    </button>
+                    <button class="demo-btn demo-btn--secondary" onclick="clearConsent()">
+                        Clear All Consent
+                    </button>
+                    <div id="consent-info" style="margin-top: 1rem;"></div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3>Configuration</h3>
+                    <button class="demo-btn" onclick="loadCustomConfig()">
+                        Load Custom Config
+                    </button>
+                    <button class="demo-btn" onclick="resetToDefault()">
+                        Reset to Default
+                    </button>
+                    <button class="demo-btn" onclick="testLocalization()">
+                        Test French Localization
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Third-Party Integration Demo</h2>
+            <p>Simulated third-party services that respond to cookie consent:</p>
+            
+            <div id="google-analytics-demo" class="google-analytics" style="display: none;">
+                <h4>📊 Google Analytics</h4>
+                <p>Analytics tracking active! Your browsing behavior is being analyzed.</p>
+                <p><small>Cookies: _ga, _gid, _gat_*</small></p>
+            </div>
+            
+            <div id="google-ads-demo" class="google-ads" style="display: none;">
+                <h4>💰 Google AdSense</h4>
+                <p>Advertisement targeting active! Personalized ads will be displayed.</p>
+                <p><small>Cookies: _gcl_au, __gads, __gpi</small></p>
+            </div>
+            
+            <div id="facebook-sdk-demo" class="facebook-sdk" style="display: none;">
+                <h4>📘 Facebook SDK</h4>
+                <p>Social media integration active! Like buttons and social features enabled.</p>
+                <p><small>Cookies: _fbp, fr</small></p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>API Documentation</h2>
+            <p>JavaScript API for the Cookie Consent Banner:</p>
+            
+            <h3>Basic Usage</h3>
+            <div class="demo-code">
+// Initialize with default configuration
+const consent = new CookieConsentBanner();
+
+// Check consent for specific category
+if (consent.hasConsent('analytical')) {
+    console.log('Analytics allowed');
+}
+
+// Show consent modal
+consent.showModal('banner');
+
+// Get current consent state
+const state = consent.getConsentState();
+console.log(state);
+            </div>
+
+            <h3>Custom Configuration</h3>
+            <div class="demo-code">
+const config = {
+    domain: 'example.com',
+    locale: 'fr',
+    blockSiteOnFunctionalDeny: true,
+    consentEndpoint: 'https://api.example.com/consent',
+    customData: {
+        siteId: '12345',
+        userSegment: 'premium'
+    },
+    localization: {
+        'fr': {
+            'cookieConsent.title': 'Consentement des cookies',
+            'cookieConsent.acceptAll': 'Tout accepter'
+        }
+    },
+    thirdPartyHandlers: {
+        customAnalytics: (enabled) => {
+            if (enabled) {
+                initCustomAnalytics();
+            } else {
+                disableCustomAnalytics();
+            }
+        }
+    }
+};
+
+const consent = new CookieConsentBanner(config);
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Features</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h4>🛡️ GDPR Compliance</h4>
+                    <ul>
+                        <li>Granular consent management</li>
+                        <li>Consent withdrawal capability</li>
+                        <li>Cookie categorization</li>
+                        <li>Consent logging with timestamps</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-card">
+                    <h4>🌍 Localization</h4>
+                    <ul>
+                        <li>Auto-detection of user locale</li>
+                        <li>Markdown policy file support</li>
+                        <li>Custom text overrides</li>
+                        <li>Multiple language support</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-card">
+                    <h4>🎨 Customization</h4>
+                    <ul>
+                        <li>CSS custom properties</li>
+                        <li>Modal positioning options</li>
+                        <li>Theme color controls</li>
+                        <li>Responsive design</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-card">
+                    <h4>🔧 Integration</h4>
+                    <ul>
+                        <li>ES6 module compatible</li>
+                        <li>Pre-built third-party blockers</li>
+                        <li>Custom handler registration</li>
+                        <li>API endpoint integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Browser Compatibility</h2>
+            <ul>
+                <li>✅ Chrome 60+</li>
+                <li>✅ Firefox 55+</li>
+                <li>✅ Safari 12+</li>
+                <li>✅ Edge 79+</li>
+                <li>✅ Mobile browsers (iOS Safari, Chrome Mobile)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the Cookie Consent Banner
+        import CookieConsentBanner from '../src/cookieConsentBanner.js';
+        
+        // Initialize with demo configuration
+        const consent = new CookieConsentBanner({
+            locale: 'en',
+            consentEndpoint: '/api/consent',
+            customData: {
+                demo: true,
+                version: '1.0.0'
+            },
+            thirdPartyHandlers: {
+                googleAnalytics: (enabled) => {
+                    const element = document.getElementById('google-analytics-demo');
+                    element.style.display = enabled ? 'block' : 'none';
+                },
+                googleAds: (enabled) => {
+                    const element = document.getElementById('google-ads-demo');
+                    element.style.display = enabled ? 'block' : 'none';
+                },
+                facebook: (enabled) => {
+                    const element = document.getElementById('facebook-sdk-demo');
+                    element.style.display = enabled ? 'block' : 'none';
+                }
+            },
+            theme: {
+                '--ccb-primary-color': '#10b981', // Green theme
+                '--ccb-primary-hover': '#059669'
+            }
+        });
+        
+        // Demo functions
+        window.showConsentState = () => {
+            const state = consent.getConsentState();
+            const statusElement = document.getElementById('consent-status');
+            const infoElement = document.getElementById('consent-info');
+            
+            if (state) {
+                statusElement.textContent = 'Consent given';
+                infoElement.innerHTML = `
+                    <div class="demo-status">
+                        <strong>Consent State:</strong><br>
+                        Functional: ${state.functional ? '✅' : '❌'}<br>
+                        Analytical: ${state.analytical ? '✅' : '❌'}<br>
+                        Performance: ${state.performance ? '✅' : '❌'}<br>
+                        Advertising: ${state.advertising ? '✅' : '❌'}<br>
+                        Social: ${state.social ? '✅' : '❌'}<br>
+                        Other: ${state.other ? '✅' : '❌'}<br>
+                        <small>Timestamp: ${state.timestamp}</small>
+                    </div>
+                `;
+            } else {
+                statusElement.textContent = 'No consent set';
+                infoElement.innerHTML = '<div class="demo-status demo-status--blocked">No consent has been given yet.</div>';
+            }
+        };
+        
+        window.clearConsent = () => {
+            consent.clearConsent();
+            document.getElementById('consent-status').textContent = 'No consent set';
+            document.getElementById('consent-info').innerHTML = '';
+            
+            // Hide all third-party demos
+            document.getElementById('google-analytics-demo').style.display = 'none';
+            document.getElementById('google-ads-demo').style.display = 'none';
+            document.getElementById('facebook-sdk-demo').style.display = 'none';
+            
+            // Show banner again
+            setTimeout(() => {
+                consent.showModal('banner');
+            }, 500);
+        };
+        
+        window.loadCustomConfig = () => {
+            console.log('Loading custom configuration...');
+            
+            // Update theme
+            consent.config.theme = {
+                '--ccb-primary-color': '#dc2626', // Red theme
+                '--ccb-primary-hover': '#b91c1c',
+                '--ccb-primary-text': '#ffffff'
+            };
+            
+            // Apply theme by updating CSS variables
+            Object.entries(consent.config.theme).forEach(([property, value]) => {
+                document.documentElement.style.setProperty(property, value);
+            });
+            
+            alert('Custom configuration loaded! Theme changed to red.');
+        };
+        
+        window.resetToDefault = () => {
+            window.location.reload();
+        };
+        
+        window.testLocalization = () => {
+            // Temporarily change to French
+            consent.config.locale = 'fr';
+            consent.showModal('fullscreen');
+            
+            // Reset after 3 seconds
+            setTimeout(() => {
+                consent.config.locale = 'en';
+            }, 3000);
+        };
+        
+        // Update status on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            showConsentState();
+        });
+
+        window.addEventListener('cookieConsentSaved', (event) => {
+            console.log('Consent saved:', event.detail);
+            showConsentState();
+        });
+        
+        // Register custom third-party handler
+        consent.registerThirdPartyHandler('customAnalytics', (enabled) => {
+            console.log('Custom analytics handler:', enabled);
+        });
+    </script>
+</body>
+</html>
