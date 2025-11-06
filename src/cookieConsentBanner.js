@@ -160,16 +160,16 @@ class CookieConsentBanner {
     
     // Send to endpoint if configured
     if (this.config.consentEndpoint) {
-      this.sendConsentToEndpoint(token, consentToken);
+      this.sendConsentToEndpoint(token, this.config.customData);
     }
   }
 
   /**
    * Send consent token to configured endpoint
    * @param {string} token 
-   * @param {Object} consentToken 
+   * @param {Object} data 
    */
-  async sendConsentToEndpoint(token, consentToken) {
+  async sendConsentToEndpoint(token, data) {
     try {
       await fetch(this.config.consentEndpoint, {
         method: 'POST',
@@ -178,7 +178,7 @@ class CookieConsentBanner {
         },
         body: JSON.stringify({
           token,
-          consentToken,
+          data,
           userAgent: navigator.userAgent,
           url: window.location.href
         })
