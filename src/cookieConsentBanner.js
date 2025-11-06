@@ -1,7 +1,7 @@
 /**
  * @file cookieConsentBanner.js
  * @description A comprehensive GDPR-compliant cookie consent banner ES6 module
- * @version 1.0.0
+ * @version 1.0.1
  * @author Cyril Bosselut <contact@b1project.com>
  * @license MIT
  */
