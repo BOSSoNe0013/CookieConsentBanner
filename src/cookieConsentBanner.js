@@ -683,7 +683,10 @@ class CookieConsentBanner {
         'cookieConsent.categories.social.title': 'Social Media Cookies',
         'cookieConsent.categories.social.description': 'These cookies enable social media features.',
         'cookieConsent.categories.other.title': 'Other Cookies',
-        'cookieConsent.categories.other.description': 'Other uncategorized cookies.'
+        'cookieConsent.categories.other.description': 'Other uncategorized cookies.',
+        'cookieConsent.policyContentError': 'Policy content could not be loaded.',
+        'cookieConsent.siteBlocker.message': 'This website requires functional cookies to work properly. Please enable them to continue using our services.',
+        'cookieConsent.siteBlocker.button': 'Enable Cookies'
       };
 
       const userTexts = this.config.localization[this.config.locale] || {};
@@ -853,9 +856,9 @@ class CookieConsentBanner {
     modal.innerHTML = `
       <div class="ccb-blocked__content">
         <h2>Functionality Limited</h2>
-        <p>This website requires functional cookies to work properly. Please enable them to continue using our services.</p>
+        <p>${this.getLocalizedText('cookieConsent.siteBlocker.message')}</p>
         <button class="ccb-btn ccb-btn--primary" onclick="CookieConsentBanner.showConsentModal('banner')">
-          Enable Cookies
+          ${this.getLocalizedText('cookieConsent.siteBlocker.button')}
         </button>
       </div>
     `;
@@ -923,9 +926,9 @@ class CookieConsentBanner {
    */
   getPolicyTitle(policyType) {
     const titles = {
-      'privacy': 'Privacy Policy',
-      'cookie': 'Cookie Policy',
-      'terms': 'Terms of Use'
+      'privacy': this.getLocalizedText('cookieConsent.privacyPolicy'),
+      'cookie': this.getLocalizedText('cookieConsent.cookiePolicy'),
+      'terms': this.getLocalizedText('cookieConsent.terms')
     };
     
     return titles[policyType] || 'Policy';
@@ -946,7 +949,7 @@ class CookieConsentBanner {
       return this.markdownParser.render(markdown);
     } catch (error) {
       console.warn('Failed to load markdown file:', url, error);
-      return '<p>Policy content could not be loaded.</p>';
+      return `<p>${this.getLocalizedText('cookieConsent.plolicyContentError')}</p>`;
     }
   }
 
@@ -976,9 +979,9 @@ class CookieConsentBanner {
     document.addEventListener('click', (e) => {
       const classList = e.target.classList;
       if (classList.contains('ccb-modal')) {
-        if (this.currentModal !== 'banner') {
+        if (['banner', 'fullscreen'].includes(this.currentModal) || this.consentState) {
           this.closeModal();
-          if (classList.contains('ccb-modal--policy') &&!this.consentState) {
+          if (classList.contains('ccb-modal--policy') && !this.consentState) {
             this.showConsentModal();
           }
         }
