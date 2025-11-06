@@ -62,7 +62,7 @@ npm install cookie-consent-banner
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@bossone0013/nu-cookie-consent-banner@1.0.1/css/cookie-consent.min.css">
 <script type="module"> 
-  import bossone0013nuCookieConsentBanner from https://cdn.jsdelivr.net/npm/@bossone0013/nu-cookie-consent-banner@1.0.1/+esm 
+  import CookieConsentBanner from 'https://cdn.jsdelivr.net/npm/@bossone0013/nu-cookie-consent-banner@1.0.1/+esm'; 
 </script>
 ```
 
