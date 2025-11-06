@@ -1,6 +1,6 @@
 {
   "name": "@bossone0013/nu-cookie-consent-banner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A comprehensive GDPR-compliant cookie consent banner ES6 module with localization support and third-party integrations",
   "main": "src/cookieConsentBanner.js",
   "module": "src/cookieConsentBanner.js",

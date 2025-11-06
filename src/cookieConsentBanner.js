@@ -1,7 +1,7 @@
 /**
  * @file cookieConsentBanner.js
  * @description A comprehensive GDPR-compliant cookie consent banner ES6 module
- * @version 1.0.1
+ * @version 1.0.2
  * @author Cyril Bosselut <contact@b1project.com>
  * @license MIT
  */
@@ -725,7 +725,6 @@ class CookieConsentBanner {
    */
   attachFullscreenEvents(modal) {
     modal.addEventListener('click', (e) => {
-      //e.preventDefault();
       const action = e.target.getAttribute('data-action');
       
       if (action === 'accept') {
@@ -747,7 +746,6 @@ class CookieConsentBanner {
    */
   attachManagementEvents(modal) {
     modal.addEventListener('click', (e) => {
-      e.preventDefault();
       const action = e.target.getAttribute('data-action');
       
       if (action === 'save') {
