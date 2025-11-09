@@ -2,6 +2,8 @@
 
 A comprehensive, GDPR-compliant cookie consent banner ES6 module with localization support, third-party integrations, and customizable themes.
 
+[![jsDeliver](https://data.jsdelivr.com/v1/package/npm/@bossone0013/nu-cookie-consent-banner/badge)](https://www.jsdelivr.com/package/npm/@bossone0013/nu-cookie-consent-banner)
+
 ## Features
 
 ### 🛡️ GDPR & Privacy Compliance
@@ -60,9 +62,9 @@ npm install cookie-consent-banner
 ### CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@bossone0013/nu-cookie-consent-banner@1.0.1/css/cookie-consent.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@bossone0013/nu-cookie-consent-banner@1.0.3/css/cookie-consent.min.css">
 <script type="module"> 
-  import CookieConsentBanner from 'https://cdn.jsdelivr.net/npm/@bossone0013/nu-cookie-consent-banner@1.0.1/+esm'; 
+  import CookieConsentBanner from 'https://cdn.jsdelivr.net/npm/@bossone0013/nu-cookie-consent-banner@1.0.3/+esm'; 
 </script>
 ```
 
@@ -227,6 +229,14 @@ consent.registerThirdPartyHandler('customAnalytics', (enabled) => {
 });
 ```
 
+#### `blockAll()`
+
+Block all third party cookies
+
+```javascript
+consent.blockAll();
+```
+
 ## Cookie Categories
 
 The banner manages six cookie categories:
@@ -372,10 +382,7 @@ The banner will POST the following data:
 ```json
 {
   "token": "uuid-v4-string",
-  "consentToken": {
-    "token": "uuid-v4-string",
-    "timestamp": "2023-01-01T00:00:00.000Z",
-    "language": "en",
+  "data": {
     "siteId": "12345",
     "userSegment": "premium",
     "page": "homepage"
@@ -415,8 +422,7 @@ npm run build
 
 This creates:
 
-- `src/cookieConsentBanner.js` (ES6 module)
-- `src/cookieConsentBanner.min.js` (minified)
+- `src/cookieConsentBanner.min.js` (minified ES6 module)
 - `css/cookie-consent.min.css` (minified CSS)
 
 ### Individual Builds
@@ -474,6 +480,21 @@ The demo showcases:
 MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Changelog
+
+### v1.0.3
+
+- ✨ feat(banner): add explicit consent blocking before modal display
+- 🤖 chore(min): update minified version with the changes
+
+### v1.0.2
+
+- ⬆️ chore(deps): update package name to @bossone0013/nu-cookie-consent-banner and upgrade all dependencies
+- 🐛 fix(banner): remove unnecessary preventDefault calls
+
+### v1.0.1
+
+- ✨ feat(banner): add localized strings for site blocker and policy titles
+- 🐛 fix(modal): allow closing modal when consent already set, forbid if not
 
 ### v1.0.0
 

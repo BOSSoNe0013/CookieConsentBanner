@@ -299,6 +299,9 @@ class CookieConsentBanner {
     }
   }
 
+  /**
+   * Block all third party cookies
+   */
   blockAll() {
     // Apply third-party handlers
     Object.entries(this.config.thirdPartyHandlers || {}).forEach(([category, handler]) => {
